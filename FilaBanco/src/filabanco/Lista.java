@@ -10,9 +10,8 @@ package filabanco;
  * @author Hellen Lopez A y Daniel Murillo 
  */
 public class Lista {
-    
     //atributos de la clase
-    public Nodo primero;//el primer nodo
+    public Nodo primero;//
     public Nodo ultimo;// el ultimo nodo
     public int tamaño;// tamaño de la lista
 
@@ -21,26 +20,33 @@ public class Lista {
         this.primero = this.ultimo = null;//primero y ultimo nodo inicia en null
         this.tamaño = 0;
     }
-
-    //método que agrege al inicio de la lista
+    /**
+     * Método que inserta los datos de la personas 
+     * @param Dato: la informacion que se recibe del Nodo
+     * @return: returna falso o verdadero, sobre el estado del nodo agregado
+     */
    public boolean insertarDato(Personas Dato) {
         Nodo nuevoNodo = new Nodo(Dato);
        boolean retorno = true;
         try {
-            if (this.primero == null) {//si la lista esta vacia hacelo lo siguiente:
-                this.primero = nuevoNodo;//Crea un nuevo nodo
-                }else { //sino  crea un nodo de primero y el otro de segundo
+            if (this.primero == null) {
+                this.primero = nuevoNodo;
+                }else { 
                nuevoNodo.siguiente = this.primero;
                 this.primero = nuevoNodo;
-            }tamaño++;//aumenta  el tamaño de la lista
-        } catch (Exception e) { //si hay un error va a retornar false
+            }tamaño++;
+        } catch (Exception e) {
             retorno = false;
         }
         return (retorno); //Retorna verdadero o falso
     }
-   public boolean borrarDato() {// borra el último elemento de la lista
+   /**
+     * Método que borra el Nodo en la Lista
+     * @return: Dato falso ó verdadero, sobre el estado del nodo Borrado
+     */
+   public boolean  borrarDato() {
         boolean retorno = true;
-        if (this.primero == null) {//si la lista está vacía no puede borrar entonse reetorna un false
+        if (this.primero == null) {
             retorno = false;
         } else {//en caso de que la lista tenga datos
             if (this.primero == this.ultimo) {//si la lista tiene únicamente un elemento
@@ -57,8 +63,10 @@ public class Lista {
 
         return (retorno); //Devuelve falso o verdadero
     }
-    
-    //método toString
+    /**
+     * Método toString
+     * @return: muestra el contenido almacenado en los nodos
+     */
      @Override
     public String toString() {
         String retorno = "";
@@ -69,4 +77,5 @@ public class Lista {
         }
         return (retorno);
     }
+    
 }
