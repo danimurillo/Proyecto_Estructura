@@ -15,6 +15,10 @@ public class Nodo {
     public Personas dato;
     public Nodo primero;
 // Datos es lo  que se recibe dentro del nodo
+    /**
+     * Método contructor del nodo
+     * @param Dato = informacion que se recibe dentro del nodo
+     */
     public Nodo(Personas Dato) {
         this.dato = Dato;
         siguiente = null;
