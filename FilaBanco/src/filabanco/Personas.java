@@ -52,6 +52,10 @@ public class Personas {
     public void setTiempoTramite(int tiempoTramite) {
         this.tiempoTrami = tiempoTramite;
     }
+    /**
+     * Método toString de la persona
+     * @return: al informacion de la persona
+     */
     @Override
     public String toString() {
         return nombre + "       " + prioridad + numeroFila+",    tiempo: "+ tiempoTrami;
