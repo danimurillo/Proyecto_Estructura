@@ -10,16 +10,18 @@ package filabanco;
  * @author Hellen Lopez A y Daniel Murillo 
  */
 public class Banco {
-   //atributos de la clase
+    //atributos de la clase
     public Lista fila;
     public int contador;
-    public String[] nom = new String[20];// Arreglo donde se guardan los nombre de la fila
+   
+    public String[] nom = new String[20];
     
-    //metodo constructor de la clase
+    /**
+     *Método Constructor del Banco
+     */
     public Banco() {
-        fila = new Lista(); //Arreglo para una Fila de Espera en el Banco
-        contador = 1;
-        //Nombres cualesquiera elegidos aleatoriamente, previamente determinados
+        fila = new Lista(); //Arreglo para una Fila en el Banco
+        //Nombres que se utilizaran en la lista 
         nom[0] = "Carlos";
         nom[1] = "Julio";
         nom[2] = "Allan";
@@ -41,18 +43,16 @@ public class Banco {
         nom[19] = "Liseth";
         
     }
-    //------//donde se crea la fila, se da la prioridad y se elige el tiempo de atencion------------------------------
-  
+   //metodo donde se crea la fila de las personas y le asignara el tiempo y la prioridad  
     /**
      * Método que crea la Fila
-     * @param cl: Variable de Tipo Cliente
+     * @param cl: Es la variable del tipo  de Cliente
      */
-    
-    public void crearFila(Personas cl){ 
-    int prio = (int) (Math.random() * 3 + 1);
-        int tiemp = (int) (Math.random() * (11 - 2) + 2);
-        int nombre = (int) (Math.random() * 9 + 1);
-        switch (prio) { //Orden de Prioridades
+    public void crearFila(Personas cl) {
+        int nombre = (int) (Math.random() * 9 +1);
+        int prioridad = (int) (Math.random() * 4 + 1);
+        int tiemp = (int) (Math.random() * (3 - 21) + 21);
+        switch (prioridad) { //Orden de Prioridades
             case 1:
                 cl.setPrioridad('A');
                 cl.setNumFila(contador);
@@ -62,9 +62,6 @@ public class Banco {
             case 2:
                 cl.setPrioridad('B');
                 cl.setNumFila(contador);
-                while (nombre != 2 && nombre != 3 && nombre != 5 && nombre != 9) {
-                    nombre = (int) (Math.random() * 9 + 1);
-                }
                 cl.setNombre(this.nom[nombre]);
                 contador++;
                 break;
@@ -74,34 +71,75 @@ public class Banco {
                 cl.setNombre(this.nom[nombre]);
                 contador++;
                 break;
+            case 4:
+                cl.setPrioridad('D');
+                cl.setNumFila(contador);
+                cl.setNombre(this.nom[nombre]);
+                contador++;
+                break;
         }
         cl.setTiempoTramite(tiemp);
         fila.insertarDato(cl); //Agrega Clientes a la Fila
     }
-    
-    //--------------------------se da el tiempo de atencion de cada caja-----------------------------------------------
-      //metodo que retorna los usuarios atendidos por cada cajero y el tiempo total
+
+    //metodo que nos retorna las personas atendidos por cada cajero y el tiempo total
     /**
-     * Método que promedia el tiempo de atención de las cajas
+     * Método da el proemdio del tiempo de atención de las cajas
      * @param caj: Variable de Tipo "Caja"
      * @return: Retorna los datos ordenados sobre la atención en la caja
      */
-    
-    public String promedioCajero(Caja caj){
-        
-         String retorno = "";
+    public String promedioCajero(Caja caj) {
+        String retorno = "";
         int tiempoTotal = 0;
         Nodo temp = caj.personas.primero;
         for (int i = 0; i < caj.personas.tamaño; i++) {
             tiempoTotal = tiempoTotal + temp.dato.getTiempoTramite();
             temp = temp.siguiente;
         }
-        retorno =  caj.nombre + "\n" + " Total de clientes atendidos : " + caj.personas.tamaño + "\n" + " Tiempo total : "
+       retorno =  caj.nombre + "\n" + " Total de clientes atendidos : " + caj.personas.tamaño + "\n" + " Tiempo total : "
                 + tiempoTotal + " minutos" + "\n" + "Promedio : " + (tiempoTotal / caj.personas.tamaño) + " cliente" + "\n\n";
         return (retorno);
-      
- }
-    //------------------------------ordena las personas por prioridad--------------------------------------------------
-    public void ordenarFia(){
-    } 
+    }
+    /**
+     *Método que ordena las filas por su prioridad
+     */
+    public void ordenaFila() {
+        Nodo temp = this.fila.primero;
+        Personas temp1 = new Personas("");
+        Personas temp2 = new Personas("");
+        for (int i = 0; i < this.fila.tamaño; i++) {
+            temp = this.fila.primero;
+            for (int j = 0; j < this.fila.tamaño - 1; j++) {
+                if (temp.dato.getNumFila() <= temp.siguiente.dato.getNumFila()) {
+                    temp = temp.siguiente;
+                } else if (temp.dato.getNumFila() > temp.siguiente.dato.getNumFila()) {
+                    temp1 = temp.siguiente.dato;
+                    temp2 = temp.dato;
+                    temp.siguiente.dato = temp2;
+                    temp.dato = temp1;
+                    temp = temp.siguiente;
+                  
+                }
+            }
+        }
+        String s = "";
+        String s2 = "";
+        for (int i = 0; i < this.fila.tamaño; i++) {
+            temp = this.fila.primero;
+            for (int j = 0; j < this.fila.tamaño - 1; j++) {
+                s = "" + temp.dato.getPrioridad();
+                s2 = "" + temp.siguiente.dato.getPrioridad();
+                if (s.compareTo(s2) <= 0) {
+                    temp = temp.siguiente;
+                } else if (s.compareTo(s2) > 0) {
+                    temp1 = temp.siguiente.dato;
+                    temp2 = temp.dato;
+                    temp.siguiente.dato = temp2;
+                    temp.dato = temp1;
+                    temp = temp.siguiente;
+                }
+            }
+        }
+    }
+   
 }
