@@ -12,13 +12,11 @@ public class FilaBanco {
 
     /**
      * @param args the command line arguments
+     * llama al principal banco que de donde inicia al programa 
      */
-    
-
     public static void main(String[] args) {
         // TODO code application logic here
-        
-        new PrincipalBanco().menu();
+        new PrincipalBanco();
     }
     
 }
